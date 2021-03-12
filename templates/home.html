@@ -1,0 +1,55 @@
+{% extends "layout.html" %} {% block body %} {% load static %}
+
+<div class="container-fluid p-0 m-0">
+	<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img src="{% static 'images/tacos.jpg' %}" class="d-block w-100" alt="Tacos Img" />
+			</div>
+			<div class="carousel-item">
+				<img src="{% static 'images/foodIndian.jpg' %}" class="d-block w-100" alt="Indian Food Img" />
+			</div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+			data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+			data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	</div>
+</div>
+
+<div class="container-fluid my-3">
+
+	<div class="card-group">
+		<div class="card text-center" style="width: 18rem;">
+			<img src="https://source.unsplash.com/1600x900/?food" class="card-img-top" alt="...">
+			<div class="card-body">
+				<h5 class="card-title">Online Order</h5>
+				<p class="card-text">Order some food</p>
+				<a href="#" class="btn btn-primary">Order</a>
+			</div>
+		</div>
+		<div class="card text-center" style="width: 18rem;">
+			<img src="https://source.unsplash.com/1600x900/?menu" class="card-img-top" alt="...">
+			<div class="card-body">
+				<h5 class="card-title">Menu</h5>
+				<p class="card-text">Read the menu</p>
+				<a href="#" class="btn btn-primary">Menu</a>
+			</div>
+		</div>
+		<div class="card text-center" style="width: 18rem;">
+			<img src="https://source.unsplash.com/1600x900/?phone" class="card-img-top" alt="...">
+			<div class="card-body">
+				<h5 class="card-title">Address</h5>
+				<p class="card-text">The restaurant is located at....</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
