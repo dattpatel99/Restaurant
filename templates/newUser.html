@@ -1,0 +1,127 @@
+{% extends "layout.html" %} {% block body %}
+
+<div
+	class="container border border-2"
+	style="
+		width: 450px;
+		height: auto;
+		margin-top: 100px;
+		background-color: #7cb0bf;
+		border-color: #a6cee6;
+		border-radius: 20px;
+	"
+>
+	<div class="container">
+		<h1 class="my-1" style="position: relative; left: 38%">Sign Up</h1>
+		<form action="" method="post">
+			{% csrf_token %}
+			<div class="container my-3">
+				<div class="row align-items-center">
+					<div class="col">
+						<label for="name" class="col col-form-label fs-4">First Name</label>
+					</div>
+					<div class="col-9">
+						<input
+							type="text"
+							class="form-control"
+							id="name"
+							name="firstName"
+							placeholder="Enter First Name"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="container my-3">
+				<div class="row align-items-center">
+					<div class="col">
+						<label for="name" class="col col-form-label fs-4">Last Name</label>
+					</div>
+					<div class="col-9">
+						<input
+							type="text"
+							class="form-control"
+							id="name"
+							name="lastName"
+							placeholder="Enter Last Name"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="container my-3">
+				<div class="row align-items-center">
+					<div class="col">
+						<label for="inputEmail3" class="col col-form-label fs-4"
+							>Email</label
+						>
+					</div>
+					<div class="col-9">
+						<input
+							type="email"
+							class="form-control"
+							id="inputEmail"
+							name="email"
+							placeholder="Enter Email"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="container my-3">
+				<div class="row align-items-center">
+					<div class="col">
+						<label for="phone" class="col col-form-label fs-4">Phone</label>
+					</div>
+					<div class="col-9">
+						<input
+							type="text"
+							class="form-control"
+							id="phone"
+							name="phone_num"
+							placeholder="Enter Phone Number"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="container my-3">
+				<div class="row align-items-center">
+					<div class="col">
+						<label for="address" class="col col-form-label fs-4">Address</label>
+					</div>
+					<div class="col-9">
+						<input
+							type="text"
+							class="form-control"
+							id="address"
+							name="address"
+							placeholder="Enter Address"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="container my-3">
+				<div class="row align-items-center">
+					<div class="col">
+						<label for="inputPassword3" class="col col-form-label fs-4"
+							>Password</label
+						>
+					</div>
+					<div class="col-9">
+						<input
+							type="password"
+							class="form-control"
+							id="inputPassword"
+							name="password"
+							placeholder="Enter Password"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<button type="submit" class="btn btn-primary btn-lg my-3">
+					Sign Up
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+{% endblock %}

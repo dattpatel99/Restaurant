@@ -1,6 +1,11 @@
-{% extends "layout.html" %} {% block body %} {% load static %}
 
-<div class="container-fluid p-0 m-0">
+{% extends request.user.is_authenticated|yesno:'logout_layout.html,layout.html' %}
+
+{% block body %} {% load static %}
+
+
+
+<div class="container-fluid p-0 my-1">
 	<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 		<div class="carousel-inner">
 			<div class="carousel-item active">
@@ -24,29 +29,29 @@
 </div>
 
 <div class="container-fluid my-3">
-
 	<div class="card-group">
 		<div class="card text-center" style="width: 18rem;">
-			<img src="https://source.unsplash.com/1600x900/?food" class="card-img-top" alt="...">
+			<img src="{%static 'images/orderOnline.jpg'%}" class="card-img-top" alt="...">
 			<div class="card-body">
 				<h5 class="card-title">Online Order</h5>
 				<p class="card-text">Order some food</p>
-				<a href="#" class="btn btn-primary">Order</a>
+				<a href="/order" class="btn btn-primary">Order</a>
 			</div>
 		</div>
 		<div class="card text-center" style="width: 18rem;">
-			<img src="https://source.unsplash.com/1600x900/?menu" class="card-img-top" alt="...">
+			<img src="{%static 'images/menuHome.jpg'%}" class="card-img-top" alt="...">
 			<div class="card-body">
 				<h5 class="card-title">Menu</h5>
 				<p class="card-text">Read the menu</p>
-				<a href="#" class="btn btn-primary">Menu</a>
+				<a href="/menu" class="btn btn-primary">Menu</a>
 			</div>
 		</div>
 		<div class="card text-center" style="width: 18rem;">
-			<img src="https://source.unsplash.com/1600x900/?phone" class="card-img-top" alt="...">
+			<img src="{%static 'images/addressHome.jpg'%}" class="card-img-top" alt="...">
 			<div class="card-body">
 				<h5 class="card-title">Address</h5>
 				<p class="card-text">The restaurant is located at....</p>
+				<a href="/contact"" class="btn btn-primary">Contact Us</a>
 			</div>
 		</div>
 	</div>

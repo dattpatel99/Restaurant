@@ -1,0 +1,15 @@
+#theNavDiv {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #e4e4a1;
+}
+
+a.navbar-brand {
+	background-color: #efefc8;
+	color: black;
+	border-style: solid;
+	border-radius: 40px;
+	border-width: 3px;
+	border-color: #f5f5dc;
+}

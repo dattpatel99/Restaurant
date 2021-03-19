@@ -1,0 +1,8 @@
+{%extends request.user.is_authenticated|yesno:'logout_layout.html,layout.html'%}
+{% block body %} {% load static %}
+
+<div class="container">
+	<p>This is the menu page</p>
+</div>
+
+{% endblock %}

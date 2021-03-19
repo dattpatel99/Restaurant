@@ -1,0 +1,75 @@
+{% extends "layout.html" %} {% block body %}{% ifequal error "no" %}
+<script>
+	window.location = "{% url 'index.html' %}";
+</script>
+{% endifequal %} {% ifequal error "yes"%}
+<div class="alert alert-danger alert-dismissible fade show my-0" role=" alert">
+	<strong> Error {{error}}</strong>
+	<button
+		type="button"
+		class="btn-close"
+		data-bs-dismiss="alert"
+		aria-label="Close"
+	></button>
+</div>
+{% endifequal %}
+
+<div
+	class="container border border-2"
+	style="
+		width: 350px;
+		height: auto;
+		margin-top: 150px;
+		background-color: #7cb0bf;
+		border-color: #a6cee6;
+		border-radius: 20px;
+	"
+>
+	<div class="container">
+		<h1 class="my-1" style="position: relative; left: 38%">Log In</h1>
+		<form action="" method="post">
+			{% csrf_token %}
+			<div class="container my-3">
+				<div class="row">
+					<label for="inputEmail3" class="col col-form-label fs-4">Email</label>
+				</div>
+				<div class="row">
+					<div class="col">
+						<input
+							type="email"
+							class="form-control"
+							id="inputEmail"
+							name="inputedEmail"
+							placeholders="Enter Eamil"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="container my-3">
+				<div class="row">
+					<label for="inputPassword3" class="col col-form-label fs-4"
+						>Password</label
+					>
+				</div>
+				<div class="row">
+					<div class="col">
+						<input
+							type="password"
+							class="form-control"
+							id="inputPassword"
+							name="inputedPassword"
+							placeholders="Enter Password"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<button type="submit" class="btn btn-primary btn-lg my-3">
+					Sign In
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+{% endblock %}
