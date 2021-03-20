@@ -1,6 +1,19 @@
 {%extends request.user.is_authenticated|yesno:'logout_layout.html,layout.html'%}
 {% block body %} {% load static %}
 
-<div class="container">This is the Order Page</div>
+<div class="container">
+	{% for item in items %}
+	<div class="carousel-item active">
+		<div class="card" style="width: 18rem">
+			<img src="..." class="card-img-top" alt="..." />
+			<div class="card-body">
+				<h5 class="card-title">{{item.itemName}}</h5>
+				<p class="card-text">{{item.itemPrice}}</p>
+				<a href="#" class="btn btn-primary">Add</a>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
 
 {% endblock %}
