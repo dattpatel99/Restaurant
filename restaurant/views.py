@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse as http
 from django.contrib.auth.models import User 
-from restaurant.models import SignUp
-from restaurant.models import Items
+from restaurant.models import SignUp, CartItems, Items
 from django.contrib import messages
 from datetime import datetime
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
@@ -19,13 +18,16 @@ def contact(request):
 def menu(request):
     return render(request, 'menu.html')
 
-@login_required
 def order(request):
     items = Items.objects.all()
+    #cart = CartItems.objects.all()
     context ={
         'items': items
     }
     return render(request, 'order.html', context)
+
+def cart(request):
+    cart = CartItems.objects.filter(user = request.user, datetime = datetime.now)
 
 '''
 Works
