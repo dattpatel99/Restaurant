@@ -8,6 +8,8 @@ class Items(models.Model):
     itemName =  models.CharField(max_length=30)
     image = models.ImageField(default='default.png', upload_to='images/')
     price = models.DecimalField(max_digits=5, decimal_places=2)
+    category = models.CharField(max_length =30, default="Food")
+    
 
     def __str__(self):
         return self.itemName

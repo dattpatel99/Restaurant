@@ -1,40 +1,43 @@
 {%extends request.user.is_authenticated|yesno:'logout_layout.html,layout.html'%}
 {% block body %} {% load static %}
 
-<div class="container-fluid">
-	{% for item in items %}
-	<div class="container-fluid my-2" style="display: inline-flex; justify-content: center; align-items: center">
-		<ul>
-			<div class="card border border-3 text-center"
-				style="width: 18rem; border-color: #a6cee6; background-color: #e4e4a1">
-				<img src="{{item.image.url}}" class="card-img-top border border-3 rounded-circle m-1"
-					alt="{{item.itemName}}"
-					style="max-width: 300px; max-height: 200px; width: auto; height: auto; background-color: #7cb0bf; border-color: #efefc8;" />
-				<div class="card-body">
-					<h5 class="card-title text-center m-1">{{item.itemName}}</h5>
-					<p class="card-text text-center m-1">{{item.itemPrice}}</p>
-					<div class="container m-1" style="
+
+<div class="container-fluid m-0 p-0" style="display: inline-flex;">
+	<div class="container m-1" style="background-color: lightblue">
+		{% for item in items %}
+		<div class="container-fluid my-2" style="display: inline-flex; justify-content: center; align-items: center">
+			<ul>
+				<div class="card border border-3 text-center"
+					style="width: 18rem; border-color: #a6cee6; background-color: #e4e4a1">
+					<img src="{{item.image.url}}" class="card-img-top border border-3 rounded-circle m-1"
+						alt="{{item.itemName}}"
+						style="max-width: 300px; max-height: 200px; width: auto; height: auto; background-color: #7cb0bf; border-color: #efefc8;" />
+					<div class="card-body">
+						<h5 class="card-title text-center m-1">{{item.itemName}}</h5>
+						<p class="card-text text-center m-1">{{item.itemPrice}}</p>
+						<div class="container m-1" style="
 							display: inline-flex;
 							justify-content: center;
 							align-items: center;
 						">
-						<a href="#" class="btn btn-primary my-1 mx-2 fs-4">-</a>
-						<p class="border rounded border-3 text-center my-1 p-2"
-							style=" border-color: #a6cee6; background-color: #7cb0bf; ">
-							Quantity
-						</p>
-						<a href="#" class="btn btn-primary my-1 mx-2 fs-4">+</a>
+							<a href="#" class="btn btn-primary my-1 mx-2 fs-4">-</a>
+							<p class="border rounded border-3 text-center my-1 p-2 text-light"
+								style=" border-color: #a6cee6; background-color: #0039a6; ">
+								Quantity
+							</p>
+							<a href="#" class="btn btn-primary my-1 mx-2 fs-4">+</a>
+						</div>
+						<a href="#" class="btn btn-primary m-1 fs-4">Add</a>
 					</div>
-					<a href="#" class="btn btn-primary m-1 fs-4">Add</a>
 				</div>
-			</div>
-		</ul>
+			</ul>
+		</div>
+		{% endfor %}
 	</div>
-	{% endfor %}
+	<div class="container-fluid m-1 p-0" style="background-color: lightblue;">
+		{% for things in carts %}
 
-	<div class="container-fluid bg-primary">
-		Cart
-
+		{% endfor %}
 	</div>
 </div>
 
