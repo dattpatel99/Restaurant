@@ -1,34 +1,62 @@
 {%extends request.user.is_authenticated|yesno:'logout_layout.html,layout.html'%}
 {% block body %} {% load static %}
 
-
 <div class="container-fluid">
-
 	<!--FIXME: MAKE CHANGES SO THAT IT SHOWS CATERGORY WISE-->
-
+	<!--FIMXE: MAKE A BETTER STYLLING SYSTEM THIS CODES IS TRASHY-->
 	{% for item in items %}
-	<div class="container-fluid my-2" style="display: inline-flex; justify-content: center; align-items: center;">
+	<div
+		class="container-fluid my-2"
+		style="display: inline-flex; justify-content: center; align-items: center"
+	>
 		<ul>
-			<div class="card border border-3 text-center"
-				style="width: 18rem; border-color: #a6cee6; background-color: #e4e4a1">
-				<img src="{{item.image.url}}" class="card-img-top border border-3 rounded-circle m-1"
+			<div
+				class="card border border-3 text-center"
+				style="width: 18rem; border-color: #a6cee6; background-color: #e4e4a1"
+			>
+				<img
+					src="{{item.image.url}}"
+					class="card-img-top border border-3 rounded-circle m-1"
 					alt="{{item.itemName}}"
-					style="max-width: 300px; max-height: 200px; width: auto; height: auto; background-color: #7cb0bf; border-color: #efefc8;" />
+					style="
+						max-width: 300px;
+						max-height: 200px;
+						width: auto;
+						height: auto;
+						background-color: #7cb0bf;
+						border-color: #efefc8;
+					"
+				/>
 				<div class="card-body">
 					<h5 class="card-title text-center m-1">{{item.itemName}}</h5>
 					<p class="card-text text-center m-1">{{item.itemPrice}}</p>
-					<div class="container m-1" style="
+					<div
+						class="container m-1"
+						style="
 							display: inline-flex;
 							justify-content: center;
 							align-items: center;
-						">
-						<button id="{{item.itemName}}" class="btn btn-primary my-1 mx-2 fs-4"
-							onclick="decreaseQuantity()">-</button>
-						<p id="Q{{item.itemName}}"
+						"
+					>
+						<button
+							id="{{item.itemName}}"
+							class="btn btn-primary my-1 mx-2 fs-4"
+							onclick="decreaseQuantity()"
+						>
+							-
+						</button>
+						<p
+							id="Q{{item.itemName}}"
 							class="border quantity rounded border-3 text-center my-1 p-2 text-light"
-							style=" border-color: #a6cee6; background-color: #0039a6; "> </p>
-						<button id="{{item.itemName}}" class="btn btn-primary my-1 mx-2 fs-4"
-							onclick="increaseQuantity()">+</button>
+							style="border-color: #a6cee6; background-color: #0039a6"
+						></p>
+						<button
+							id="{{item.itemName}}"
+							class="btn btn-primary my-1 mx-2 fs-4"
+							onclick="increaseQuantity()"
+						>
+							+
+						</button>
 					</div>
 				</div>
 			</div>
@@ -37,42 +65,34 @@
 	{% endfor %}
 
 	<div class="container my-1">
-		<button class="btn button btn-primary fs-4" onclick="addToCart()">Submit</button>
+		<button
+			type="submit"
+			class="btn button btn-primary fs-4"
+			onclick="addToCart()"
+		>
+			Submit
+		</button>
 	</div>
 </div>
 
-{% endblock %}
-
-{% block js %}
+{% endblock %} {% block js %}
 <script>
-
-	if (localStorage.getItem('cart') == null) {
+	if (localStorage.getItem("cart") == null) {
 		var cart = {};
-	}
-
-	else {
-		cart = JSON.parse(localStorage.getItem('cart'));
-		loadQuantity();
-	}
-
-	function loadQuantity() {
-		for (let i in cart) {
-			let quantity = document.getElementById("Q" + i);
-			if (quantity.innerText == 0) {
-				quantity.innerText = " ";
-			}
-			else {
-				quantity.innerText = cart[i];
-			}
-		}
+	} else {
+		cart = JSON.parse(localStorage.getItem("cart"));
 	}
 
 	function addToCart() {
-		localStorage.setItem('cart', JSON.stringify(cart));
+		localStorage.setItem("cart", JSON.stringify(cart));
+		localStorage.clear();
+		// Sends the user to main page
+		// FIXME: REPLACE THIS TO SEND USER TO CART PAGE FOR FINAL SUBMISSION
+		window.location.pathname = "/";
 	}
 
 	function decreaseQuantity() {
-		console.log('Decrease quantity');
+		console.log("Decrease quantity");
 		let idStr = document.getElementById(this.event.target.id).id;
 
 		let quantity = document.getElementById("Q" + idStr);
@@ -91,9 +111,7 @@
 		if (cart[idStr] != undefined) {
 			cart[idStr] += 1;
 			quantity.innerText = cart[idStr];
-		}
-
-		else {
+		} else {
 			cart[idStr] = 1;
 			quantity.innerText = cart[idStr];
 		}

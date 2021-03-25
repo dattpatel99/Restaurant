@@ -1,6 +1,6 @@
 from django.contrib import admin
-from restaurant.models import Items, SignUp
+from restaurant.models import Item, SignUp
 
 # Register your models here.
-admin.site.register(Items)
+admin.site.register(Item)
 admin.site.register(SignUp)
