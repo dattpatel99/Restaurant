@@ -19,7 +19,7 @@ class SignUp(models.Model):
     phoneNum = models.CharField(max_length=10,null=True)
     address = models.TextField()
 
-class CartItem():
+class CartItem(models.Model):
     ORDER_STATUS = (
         ('Active', 'Active'),
         ('Delivered', 'Delivered')

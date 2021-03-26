@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from math import ceil
 from django.shortcuts import HttpResponse as http
 from django.contrib.auth.models import User 
 from restaurant.models import SignUp, CartItem, Item
@@ -19,11 +20,18 @@ def menu(request):
     return render(request, 'menu.html')
 
 def order(request):
-    items = Item.objects.all()
-    #cart = CartItems.objects.all()
-    context ={
-        'items': items
-    }
+    # IDK what it does pretty much copied from: CodeWithHarry
+    # Credit: https://www.youtube.com/watch?v=6iDW97emfB0&list=PL1PPKISJVChyleKhFnRBWeYvBGElatze-&index=15&t=31s
+    allItems = []
+    categoriesOfProducts = Item.objects.values('category', 'itemName')
+    # Creates a set 
+    categories = {i['category'] for i in categoriesOfProducts}
+    for cat in categories:
+        food = Item.objects.filter(category = cat)
+        numItems = len(food)
+        nSlides = numItems//3 + ceil((numItems/3) - (numItems//3))
+        allItems.append([food, range(1, nSlides), nSlides])
+    context = {"allItems": allItems}
     return render(request, 'order.html', context)
 
 def cart(request):

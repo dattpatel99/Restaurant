@@ -1,82 +1,201 @@
 {%extends request.user.is_authenticated|yesno:'logout_layout.html,layout.html'%}
+
+{% block css %}
+.col-md-3
+{
+display: inline-block;
+margin-left:-4px;
+}
+
+.carousel-indicators .active {
+background-color: blue;
+}
+
+.col-md-3 img{
+
+width: 227px;
+max-height: 242px;
+}
+
+body .carousel-indicator li{
+background-color: blue;
+}
+
+body .carousel-indicators{
+bottom: 0;
+}
+
+body .carousel-control-prev-icon,
+body .carousel-control-next-icon{
+background-color: blue;
+}
+
+.carousel-control-prev,
+.carousel-control-next{
+top: auto;
+bottom: auto;
+}
+
+body .no-padding{
+padding-left: 0,
+padding-right: 0;
+}
+
+{% endblock %}
+
 {% block body %} {% load static %}
 
-<div class="container-fluid">
-	<!--FIXME: MAKE CHANGES SO THAT IT SHOWS CATERGORY WISE-->
-	<!--FIMXE: MAKE A BETTER STYLLING SYSTEM THIS CODES IS TRASHY-->
-	{% for item in items %}
-	<div
-		class="container-fluid my-2"
-		style="display: inline-flex; justify-content: center; align-items: center"
-	>
-		<ul>
-			<div
-				class="card border border-3 text-center"
-				style="width: 18rem; border-color: #a6cee6; background-color: #e4e4a1"
-			>
-				<img
-					src="{{item.image.url}}"
-					class="card-img-top border border-3 rounded-circle m-1"
-					alt="{{item.itemName}}"
-					style="
+
+<!--FIXME: MAKE CHANGES SO THAT IT SHOWS CATERGORY WISE-->
+<!--FIMXE: MAKE A BETTER STYLLING SYSTEM THIS CODES IS TRASHY-->
+
+<div class="container">
+
+	<!--Food= product, range = range nSlides = nSlides, allItems = allItems-->
+	{% for food, range, nSlides in allItems %}
+	<h5 class="my-4 fs-3">
+		{{food.0.category}}</h5>
+	<div id="demo{{forloop.counter}}" class="carousel slide my-3" data-ride="carousel">
+		<ul class="carousel-indicators">
+			<li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
+			{% for i in range %}
+			<li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}"></li>
+			{% endfor %}
+		</ul>
+
+
+		<div class="container carousel-inner no-padding">
+			<div class="carousel-item active">
+				<div class="col-xs-3 col-sm-3 col-md-3">
+					<div class="card border border-3 text-center"
+						style="width: 18rem; border-color: #a6cee6; background-color: #e4e4a1">
+						<img src='{{food.0.image.url}}' class="card-img-top border border-3 rounded-circle m-1"
+							alt="{{food.0.itemName}}" style="
 						max-width: 300px;
 						max-height: 200px;
 						width: auto;
 						height: auto;
 						background-color: #7cb0bf;
 						border-color: #efefc8;
-					"
-				/>
-				<div class="card-body">
-					<h5 class="card-title text-center m-1">{{item.itemName}}</h5>
-					<p class="card-text text-center m-1">{{item.itemPrice}}</p>
-					<div
-						class="container m-1"
-						style="
+					">
+						<div class="card-body">
+							<h5 class="card-title">{{food.0.itemName}}</h5>
+							<p class="card-text">{{food.0.itemPrice}}</p>
+							<!-- This is the add to cart button....not really needed replace with quantity-->
+							<div class="container m-1" style="
 							display: inline-flex;
 							justify-content: center;
 							align-items: center;
-						"
-					>
-						<button
-							id="{{item.itemName}}"
-							class="btn btn-primary my-1 mx-2 fs-4"
-							onclick="decreaseQuantity()"
-						>
-							-
-						</button>
-						<p
-							id="Q{{item.itemName}}"
-							class="border quantity rounded border-3 text-center my-1 p-2 text-light"
-							style="border-color: #a6cee6; background-color: #0039a6"
-						></p>
-						<button
-							id="{{item.itemName}}"
-							class="btn btn-primary my-1 mx-2 fs-4"
-							onclick="increaseQuantity()"
-						>
-							+
-						</button>
+						">
+								<button id="{{food.0.itemName}}" class="btn btn-primary my-1 mx-2 fs-4"
+									onclick="decreaseQuantity()">
+									-
+								</button>
+								<p id="Q{{food.0.itemName}}"
+									class="border quantity rounded border-3 text-center my-1 p-2 text-light"
+									style="border-color: #a6cee6; background-color: #0039a6"></p>
+								<button id="{{food.0.itemName}}" class="btn btn-primary my-1 mx-2 fs-4"
+									onclick="increaseQuantity()">
+									+
+								</button>
+							</div>
+						</div>
 					</div>
+				</div>
+
+				<!--Firgure out what this is for (could be for inactive item)-->
+				{% for i in food|slice:"1:" %}
+				<div class="col-xs-3 col-sm-3 col-md-3">
+					<div class="card border border-3 text-center"
+						style="width: 18rem; border-color: #a6cee6; background-color: #e4e4a1">
+						<img src='{{i.image.url}}' class="card-img-top border border-3 rounded-circle m-1"
+							alt="{{i.itemName}}" style="
+						max-width: 300px;
+						max-height: 200px;
+						width: auto;
+						height: auto;
+						background-color: #7cb0bf;
+						border-color: #efefc8;
+					">
+						<div class="card-body">
+							<h5 class="card-title">{{i.itemName}}</h5>
+							<p class="card-text">{{i.itemPrice}}</p>
+							<div class="container m-1" style="
+							display: inline-flex;
+							justify-content: center;
+							align-items: center;
+						">
+								<button id="{{i.itemName}}" class="btn btn-primary my-1 mx-2 fs-4"
+									onclick="decreaseQuantity()">
+									-
+								</button>
+								<p id="Q{{i.itemName}}"
+									class="border quantity rounded border-3 text-center my-1 p-2 text-light"
+									style="border-color: #a6cee6; background-color: #0039a6"></p>
+								<button id="{{i.itemName}}" class="btn btn-primary my-1 mx-2 fs-4"
+									onclick="increaseQuantity()">
+									+
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--Firgure out what this is for (might be for inactive item) -->
+
+				{% if forloop.counter|divisibleby:3 and forloop.counter > 0 and not forloop.last %}
+			</div>
+			<!--Firgure out what this is for -->
+
+			<div class="carousel-item">
+				{% endif %}
+
+				{% endfor %}
+			</div>
+
+
+
+		</div>
+	</div>
+
+
+	<!-- left and right controls for the slide -->
+	<a class="carousel-control-prev" href="#demo{{forloop.counter}}" data-slide="prev">
+		<span class="carousel-control-prev-icon"></span>
+	</a>
+	<a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
+		<span class="carousel-control-next-icon"></span>
+	</a>
+	{% endfor %}
+
+	<div class="container my-1">
+		<button type="submit" class="btn button btn-primary fs-4" onclick="addToCart()">
+			Submit
+		</button>
+	</div>
+
+</div>
+</div>
+
+
+<!-- {% for item in items %}
+	<div class="container-fluid my-2">
+		<ul>
+			<div class="card ">
+				<img src="{{item.image.url}}" class="card-img-top " alt="{{item.itemName}}" />
+				<div class="card-body">
+					<h5 class="card-title text-center m-1">{{item.itemName}}</h5>
+					<p class="card-text text-center m-1">{{item.itemPrice}}</p>
+
 				</div>
 			</div>
 		</ul>
 	</div>
-	{% endfor %}
+	{% endfor %} -->
 
-	<div class="container my-1">
-		<button
-			type="submit"
-			class="btn button btn-primary fs-4"
-			onclick="addToCart()"
-		>
-			Submit
-		</button>
-	</div>
-</div>
 
 {% endblock %} {% block js %}
 <script>
+	// If there is no cart then make one otherwise load it.
 	if (localStorage.getItem("cart") == null) {
 		var cart = {};
 	} else {
@@ -84,13 +203,18 @@
 	}
 
 	function addToCart() {
+		// IDK What it does but youtube said to do it....
 		localStorage.setItem("cart", JSON.stringify(cart));
+
+		// Clears the local storage
 		localStorage.clear();
+
 		// Sends the user to main page
 		// FIXME: REPLACE THIS TO SEND USER TO CART PAGE FOR FINAL SUBMISSION
 		window.location.pathname = "/";
 	}
 
+	// Decreases the quantity
 	function decreaseQuantity() {
 		console.log("Decrease quantity");
 		let idStr = document.getElementById(this.event.target.id).id;
@@ -103,6 +227,7 @@
 		}
 	}
 
+	// Increases the quantity
 	function increaseQuantity() {
 		let idStr = document.getElementById(this.event.target.id).id;
 
