@@ -24,7 +24,6 @@ def order(request):
     # Credit: https://www.youtube.com/watch?v=6iDW97emfB0&list=PL1PPKISJVChyleKhFnRBWeYvBGElatze-&index=15&t=31s
     
     allItems = []
-    
     # Creates a list of dictionaries with catergory and itemName as key and the cats and names as value
     categoriesOfProducts = Item.objects.values('category', 'itemName')
     
@@ -41,10 +40,13 @@ def order(request):
         numItems = len(food)
 
         # creates nSlides for that food item
-        if (numItems // 3 == 0):
-            nSlides = numItems / 3
+        if (numItems > 3):
+            if (numItems // 3 == 0):
+                nSlides = numItems / 3
+            else:
+                nSlides = ceil(numItems / 3)
         else:
-            nSlides = ceil(numItems/3)
+            nSlides = 1
 
         # adds its to all items
         # Creates a list inside of the list allItems. The inner list holds: A query set of food type Item, followed by a range and then number of slide 
