@@ -4,7 +4,7 @@ from django.utils import timezone
 
 
 # Create your models here.
-class Items(models.Model):
+class Item(models.Model):
     itemName =  models.CharField(max_length=30)
     image = models.ImageField(default='default.png', upload_to='images/')
     price = models.DecimalField(max_digits=5, decimal_places=2)
@@ -19,7 +19,7 @@ class SignUp(models.Model):
     phoneNum = models.CharField(max_length=10,null=True)
     address = models.TextField()
 
-class CartItems():
+class CartItem(models.Model):
     ORDER_STATUS = (
         ('Active', 'Active'),
         ('Delivered', 'Delivered')

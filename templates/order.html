@@ -1,78 +1,219 @@
 {%extends request.user.is_authenticated|yesno:'logout_layout.html,layout.html'%}
-{% block body %} {% load static %}
+{% block css %}
+#carousel-indicators{
+background-color: #5b5b1a;
+}
+.carousel-indicators{
+background-color: #c5dfef;
+}
+.carousel-item{
+background-color: #c5dfef;
+}
+
+#rowOfCards{
+display: inline-box;
+justify-content: center;
+align-items: center;
+position: relative;
+left: 50px;
+padding-top: 20px;
+padding-bottom: 50px;
+}
+
+.carousel-control-prev, .carousel-control-next{
+background-color: #a6cee7;
+width: 10%;
+}
+
+{% endblock %}
+{% block body %}
+{% load static %}
 
 
-<div class="container-fluid">
+<div class="container-fluid m-0 px-3">
 
-	<!--FIXME: MAKE CHANGES SO THAT IT SHOWS CATERGORY WISE-->
+	<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+		<!-- Indicators -->
+		<div class="carousel-indicators">
+			<button id="carousel-indicators" type="button" data-bs-target="#carouselExampleIndicators"
+				data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+			<button id="carousel-indicators" type="button" data-bs-target="#carouselExampleIndicators"
+				data-bs-slide-to="1" aria-label="Slide 2"></button>
+			<button id="carousel-indicators" type="button" data-bs-target="#carouselExampleIndicators"
+				data-bs-slide-to="2" aria-label="Slide 3"></button>
+		</div>
 
-	{% for item in items %}
-	<div class="container-fluid my-2" style="display: inline-flex; justify-content: center; align-items: center;">
-		<ul>
-			<div class="card border border-3 text-center"
-				style="width: 18rem; border-color: #a6cee6; background-color: #e4e4a1">
-				<img src="{{item.image.url}}" class="card-img-top border border-3 rounded-circle m-1"
-					alt="{{item.itemName}}"
-					style="max-width: 300px; max-height: 200px; width: auto; height: auto; background-color: #7cb0bf; border-color: #efefc8;" />
-				<div class="card-body">
-					<h5 class="card-title text-center m-1">{{item.itemName}}</h5>
-					<p class="card-text text-center m-1">{{item.itemPrice}}</p>
-					<div class="container m-1" style="
-							display: inline-flex;
-							justify-content: center;
-							align-items: center;
-						">
-						<button id="{{item.itemName}}" class="btn btn-primary my-1 mx-2 fs-4"
-							onclick="decreaseQuantity()">-</button>
-						<p id="Q{{item.itemName}}"
-							class="border quantity rounded border-3 text-center my-1 p-2 text-light"
-							style=" border-color: #a6cee6; background-color: #0039a6; "> </p>
-						<button id="{{item.itemName}}" class="btn btn-primary my-1 mx-2 fs-4"
-							onclick="increaseQuantity()">+</button>
+		<div class="carousel-inner my-5">
+			<div class="carousel-item active">
+				<div id="rowOfCards" class="row">
+					<div class="col-xs-3 col-sm-3 col-md-3">
+						<div class="card" style="width: 18rem;">
+							<img src="{% static 'images/foodIndian.jpg' %}" class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the card title and make up the
+									bulk
+									of the card's content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3">
+						<div class="card" style="width: 18rem;">
+							<img src="{% static 'images/foodIndian.jpg' %}" class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the card title and make up the
+									bulk
+									of the card's content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3">
+						<div class="card" style="width: 18rem;">
+							<img src="{% static 'images/foodIndian.jpg' %}" class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the card title and make up the
+									bulk
+									of the card's content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</ul>
-	</div>
-	{% endfor %}
-
-	<div class="container my-1">
-		<button class="btn button btn-primary fs-4" onclick="addToCart()">Submit</button>
+			<div class="carousel-item">
+				<div id="rowOfCards" class="row">
+					<div class="col-xs-3 col-sm-3 col-md-3">
+						<div class="card" style="width: 18rem;">
+							<img src="{% static 'images/tacos.jpg' %}" class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the card title and make up the
+									bulk
+									of the card's content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3">
+						<div class="card" style="width: 18rem;">
+							<img src="{% static 'images/tacos.jpg' %}" class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the card title and make up the
+									bulk
+									of the card's content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3">
+						<div class="card" style="width: 18rem;">
+							<img src="{% static 'images/tacos.jpg' %}" class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the card title and make up the
+									bulk
+									of the card's content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="carousel-item">
+				<div id="rowOfCards" class="row">
+					<div class="col-xs-3 col-sm-3 col-md-3">
+						<div class="card" style="width: 18rem;">
+							<img src="{% static 'images/foodIndian.jpg' %}" class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the card title and make up the
+									bulk
+									of the card's content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3">
+						<div class="card" style="width: 18rem;">
+							<img src="{% static 'images/foodIndian.jpg' %}" class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the card title and make up the
+									bulk
+									of the card's content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3">
+						<div class="card" style="width: 18rem;">
+							<img src="{% static 'images/foodIndian.jpg' %}" class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the card title and make up the
+									bulk
+									of the card's content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
 	</div>
 </div>
 
-{% endblock %}
+<div class="container-fluid m-0 px-3">
+	{% for food, range, nSlides in allItems %}
+	<p>{{forloop.counter}}</p>
+	{% for i in food %}
+		<p>{{i.itemName}}</p>
+	{% endfor %}
+	{% endfor %}
+</div>
 
-{% block js %}
+<!--FIXME: MAKE CHANGES SO THAT IT SHOWS CATERGORY WISE-->
+<!--FIMXE: MAKE A BETTER STYLLING SYSTEM THIS CODES IS TRASHY-->
+
+
+
+{% endblock %} {% block js %}
 <script>
-
-	if (localStorage.getItem('cart') == null) {
+	// If there is no cart then make one otherwise load it.
+	if (localStorage.getItem("cart") == null) {
 		var cart = {};
-	}
-
-	else {
-		cart = JSON.parse(localStorage.getItem('cart'));
-		loadQuantity();
-	}
-
-	function loadQuantity() {
-		for (let i in cart) {
-			let quantity = document.getElementById("Q" + i);
-			if (quantity.innerText == 0) {
-				quantity.innerText = " ";
-			}
-			else {
-				quantity.innerText = cart[i];
-			}
-		}
+	} else {
+		cart = JSON.parse(localStorage.getItem("cart"));
 	}
 
 	function addToCart() {
-		localStorage.setItem('cart', JSON.stringify(cart));
+		// IDK What it does but youtube said to do it....
+		localStorage.setItem("cart", JSON.stringify(cart));
+
+		// Clears the local storage
+		localStorage.clear();
+
+		// Sends the user to main page
+		// FIXME: REPLACE THIS TO SEND USER TO CART PAGE FOR FINAL SUBMISSION
+		window.location.pathname = "/";
 	}
 
+	// Decreases the quantity
 	function decreaseQuantity() {
-		console.log('Decrease quantity');
+		console.log("Decrease quantity");
 		let idStr = document.getElementById(this.event.target.id).id;
 
 		let quantity = document.getElementById("Q" + idStr);
@@ -83,6 +224,7 @@
 		}
 	}
 
+	// Increases the quantity
 	function increaseQuantity() {
 		let idStr = document.getElementById(this.event.target.id).id;
 
@@ -91,12 +233,25 @@
 		if (cart[idStr] != undefined) {
 			cart[idStr] += 1;
 			quantity.innerText = cart[idStr];
-		}
-
-		else {
+		} else {
 			cart[idStr] = 1;
 			quantity.innerText = cart[idStr];
 		}
 	}
 </script>
 {% endblock %}
+
+<!-- {% for item in items %}
+	<div class="container-fluid my-2">
+		<ul>
+			<div class="card ">
+				<img src="{{item.image.url}}" class="card-img-top " alt="{{item.itemName}}" />
+				<div class="card-body">
+					<h5 class="card-title text-center m-1">{{item.itemName}}</h5>
+					<p class="card-text text-center m-1">{{item.itemPrice}}</p>
+
+				</div>
+			</div>
+		</ul>
+	</div>
+	{% endfor %} -->
