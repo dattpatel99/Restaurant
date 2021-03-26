@@ -41,7 +41,10 @@ def order(request):
         numItems = len(food)
 
         # creates nSlides for that food item
-        nSlides = numItems//4 + ceil((numItems/4) - (numItems//4))
+        if (numItems // 3 == 0):
+            nSlides = numItems / 3
+        else:
+            nSlides = ceil(numItems/3)
 
         # adds its to all items
         # Creates a list inside of the list allItems. The inner list holds: A query set of food type Item, followed by a range and then number of slide 
