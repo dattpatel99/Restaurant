@@ -22,16 +22,33 @@ def menu(request):
 def order(request):
     # IDK what it does pretty much copied from: CodeWithHarry
     # Credit: https://www.youtube.com/watch?v=6iDW97emfB0&list=PL1PPKISJVChyleKhFnRBWeYvBGElatze-&index=15&t=31s
+    
     allItems = []
+    
+    # Creates a list of dictionaries with catergory and itemName as key and the cats and names as value
     categoriesOfProducts = Item.objects.values('category', 'itemName')
+    
     # Creates a set 
+    # From the previous list takes only categories and creates a set of only categories
     categories = {i['category'] for i in categoriesOfProducts}
+
+    # loops through the categories set and selects each category
     for cat in categories:
+        # Filters the food item based on the category
         food = Item.objects.filter(category = cat)
+
+        # Gets the number of food items in that category
         numItems = len(food)
-        nSlides = numItems//3 + ceil((numItems/3) - (numItems//3))
+
+        # creates nSlides for that food item
+        nSlides = numItems//4 + ceil((numItems/4) - (numItems//4))
+
+        # adds its to all items
+        # Creates a list inside of the list allItems. The inner list holds: A query set of food type Item, followed by a range and then number of slide 
         allItems.append([food, range(1, nSlides), nSlides])
+    
     context = {"allItems": allItems}
+    
     return render(request, 'order.html', context)
 
 def cart(request):
