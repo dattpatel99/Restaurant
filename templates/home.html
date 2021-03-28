@@ -1,27 +1,43 @@
-
-{% extends request.user.is_authenticated|yesno:'logout_layout.html,layout.html' %}
-
-{% block body %} {% load static %}
-
-
+{% extends request.user.is_authenticated|yesno:'logout_layout.html,layout.html'%}
+ {% block body %} {% load static %}
 
 <div class="container-fluid p-0 my-1">
-	<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+	<div
+		id="carouselExampleControls"
+		class="carousel slide"
+		data-bs-ride="carousel"
+	>
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img src="{% static 'images/tacos.jpg' %}" class="d-block w-100" alt="Tacos Img" />
+				<img
+					src="{% static 'images/tacos.jpg' %}"
+					class="d-block w-100"
+					alt="Tacos Img"
+				/>
 			</div>
 			<div class="carousel-item">
-				<img src="{% static 'images/foodIndian.jpg' %}" class="d-block w-100" alt="Indian Food Img" />
+				<img
+					src="{% static 'images/foodIndian.jpg' %}"
+					class="d-block w-100"
+					alt="Indian Food Img"
+				/>
 			</div>
 		</div>
-		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-			data-bs-slide="prev">
+		<button
+			class="carousel-control-prev"
+			type="button"
+			data-bs-target="#carouselExampleControls"
+			data-bs-slide="prev"
+		>
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 			<span class="visually-hidden">Previous</span>
 		</button>
-		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-			data-bs-slide="next">
+		<button
+			class="carousel-control-next"
+			type="button"
+			data-bs-target="#carouselExampleControls"
+			data-bs-slide="next"
+		>
 			<span class="carousel-control-next-icon" aria-hidden="true"></span>
 			<span class="visually-hidden">Next</span>
 		</button>
@@ -30,28 +46,48 @@
 
 <div class="container-fluid my-3">
 	<div class="card-group">
-		<div class="card text-center" style="width: 18rem;">
-			<img src="{%static 'images/orderOnline.jpg'%}" class="card-img-top" alt="...">
+		<div class="card text-center" style="width: 18rem">
+			<img
+				src="{%static 'images/orderOnline.jpg'%}"
+				class="card-img-top"
+				alt="Online Order"
+			/>
 			<div class="card-body">
 				<h5 class="card-title">Online Order</h5>
-				<p class="card-text">Order some food</p>
-				<a href="/order" class="btn btn-primary">Order</a>
+
+				{% if not request.user.is_authenticated %}
+				<p class="card-text">Login and order some delicious food</p>
+				<button href="/order" class="btn btn-primary" disabled>Order</button>
+				{% endif %} 
+				
+				{% if request.user.is_authenticated %}
+				<p class="card-text">Order some delicious food</p>
+				<button href="/order" class="btn btn-primary">Order</button>
+				{% endif %}
 			</div>
 		</div>
-		<div class="card text-center" style="width: 18rem;">
-			<img src="{%static 'images/menuHome.jpg'%}" class="card-img-top" alt="...">
+		<div class="card text-center" style="width: 18rem">
+			<img
+				src="{%static 'images/menuHome.jpg'%}"
+				class="card-img-top"
+				alt="Menu"
+			/>
 			<div class="card-body">
 				<h5 class="card-title">Menu</h5>
 				<p class="card-text">Read the menu</p>
-				<a href="/menu" class="btn btn-primary">Menu</a>
+				<button href="/menu" class="btn btn-primary">Menu</button>
 			</div>
 		</div>
-		<div class="card text-center" style="width: 18rem;">
-			<img src="{%static 'images/addressHome.jpg'%}" class="card-img-top" alt="...">
+		<div class="card text-center" style="width: 18rem">
+			<img
+				src="{%static 'images/addressHome.jpg'%}"
+				class="card-img-top"
+				alt="Contact Us"
+			/>
 			<div class="card-body">
 				<h5 class="card-title">Address</h5>
 				<p class="card-text">The restaurant is located at....</p>
-				<a href="/contact"" class="btn btn-primary">Contact Us</a>
+				<button href="/contact" class="btn btn-primary">Contact Us</button>
 			</div>
 		</div>
 	</div>
