@@ -1,6 +1,11 @@
 {%extends request.user.is_authenticated|yesno:'logout_layout.html,layout.html'%}
 {% block css %}
 
+body{
+	margin: 0px;
+	padding: 0px;
+}
+
 #slideshow{
 background-color: #c5dfef;
 padding: 20px;
