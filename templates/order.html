@@ -1,5 +1,9 @@
 {%extends request.user.is_authenticated|yesno:'logout_layout.html,layout.html'%}
 {% block css %}
+body{
+margin: 0px;
+padding: 0px;
+}
 
 body{
 	margin: 0px;

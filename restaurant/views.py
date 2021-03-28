@@ -56,7 +56,7 @@ def order(request):
         # adds its to all items
         # Creates a list inside of the list allItems. The inner list holds: A query set of food type Item, followed by a range and then number of slide 
         allItems.append([food, range(1, nSlides), nSlides])
-        
+    
     context = {"allItems": allItems}
     
     return render(request, 'order.html', context)
