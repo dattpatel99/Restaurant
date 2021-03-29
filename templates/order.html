@@ -81,35 +81,8 @@ align-items: center;
 		<div class="carousel-inner my-5">
 			<div class="carousel-item active">
 				<div id="rowOfCards" class="row">
-					<div class="col-xs-3 col-sm-3 col-md-3">
-						<div class="card  border border-3 text-center" style="width: 18rem; border-color: #a6cee6;
-						background-color: #e4e4a1;">
-							<img id="cardImg" src="{{ food.0.image.url }}"
-								class="card-img-top border border-3 rounded-circle m-1" alt="{{food.0.itemName}}" />
-							<div class="card-body">
-								<h5 class="card-title">{{ food.0.itemName }}</h5>
-								<div id="quantityCont" class="container m-1" style="
-										display: inline-flex;
-										justify-content: center;
-										align-items: center;
-									">
-									<button id="{{food.0.itemName}}" class="btn btn-primary my-1 mx-2 fs-4"
-										onclick="decreaseQuantity()">
-										-
-									</button>
-									<p id="Q{{food.0.itemName}}"
-										class="border quantity rounded border-3 text-center my-1 p-2 text-light"
-										style="border-color: #a6cee6; background-color: #0039a6"></p>
-									<button id="{{food.0.itemName}}" class="btn btn-primary my-1 mx-2 fs-4"
-										onclick="increaseQuantity()">
-										+
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
 					<!--Loops inside of food from the next element 1 since first element already prensented -->
-					{% for i in food|slice:"1:" %}
+					{% for i in food %}
 					<div class="col-xs-3 col-sm-3 col-md-3">
 						<div class="card border border-3 text-center" style="width: 18rem; border-color: #a6cee6;
 						background-color: #e4e4a1;">
@@ -138,7 +111,7 @@ align-items: center;
 						</div>
 					</div>
 					<!--If this is the element divisible by 3 and its foorloop counter is greater 0 and this is not the last loop then close the previous carousel item and row, and start a new one -->
-					{% if forloop.counter|divisibleby:2 and forloop.counter > 0 and not forloop.last %}
+					{% if forloop.counter|divisibleby:3 and forloop.counter > 0 and not forloop.last %}
 				</div>
 			</div>
 			<div class="carousel-item">
