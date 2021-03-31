@@ -69,12 +69,12 @@
 
 				{% if not request.user.is_authenticated %}
 				<p class="card-text">Login and order some delicious food</p>
-				<button href="/order" class="btn btn-primary" disabled>Order</button>
+				<a href="/order" class="btn btn-primary" disabled>Order</a>
 				{% endif %} 
 				
 				{% if request.user.is_authenticated %}
 				<p class="card-text">Order some delicious food</p>
-				<button href="/order" class="btn btn-primary">Order</button>
+				<a href="/order" class="btn btn-primary">Order</a>
 				{% endif %}
 			</div>
 		</div>
@@ -87,7 +87,7 @@
 			<div class="card-body">
 				<h5 class="card-title">Menu</h5>
 				<p class="card-text">Read the menu</p>
-				<button href="/menu" class="btn btn-primary">Menu</button>
+				<a href="/menu" class="btn btn-primary">Menu</a>
 			</div>
 		</div>
 		<div class="card text-center" style="width: 18rem">
@@ -99,7 +99,7 @@
 			<div class="card-body">
 				<h5 class="card-title">Address</h5>
 				<p class="card-text">The restaurant is located at....</p>
-				<button href="/contact" class="btn btn-primary">Contact Us</button>
+				<a href="/contact" class="btn btn-primary">Contact Us</a>
 			</div>
 		</div>
 	</div>

@@ -83,8 +83,36 @@ def home(request):
    
     return render(request, 'home.html')
 
+'''
+Works
+'''
 def contact(request):
-    return render(request, 'contact.html')
+    if request.method == "POST":
+        nameOfUser = request.POST.get("name")
+        emailUser = request.POST.get("email")
+        idOrder = request.POST.get("orderID")
+        number = request.POST.get("phone")
+        message = request.POST.get("message")
+
+        # Email variables to use
+        subject = "Customer Contact from " + nameOfUser
+        emailMsg = "User email: " + emailUser + "\n\n Order ID: " + idOrder + "\n\n Message: " + message + "\n\n Phone Number: " + number
+        emailRecevier = "flask.tutorial21@gmail.com"
+
+        #Send email to admin whoever they are
+        Mail(
+            subject,
+            emailMsg,
+            request.user.username,
+            [emailRecevier],
+            fail_silently=False
+        )
+        emailSent = "Thank you for your feedback!"
+        context = {'sent': 'yes', 'cusMsg' : emailSent}
+    else:
+        context = {'sent': 'no', 'cusMsg': 'null'}
+
+    return render(request, 'contact.html', context)
 '''
 Works 
 '''
