@@ -78,6 +78,7 @@ def changeOrder(theOrder):
 # Create your views here.
 '''
 Works
+The home page
 '''
 def home(request):
    
@@ -85,6 +86,7 @@ def home(request):
 
 '''
 Works
+Allows user to enter feedback
 '''
 def contact(request):
     if request.method == "POST":
@@ -115,6 +117,7 @@ def contact(request):
     return render(request, 'contact.html', context)
 '''
 Works 
+Shows the menu to user without them having to login
 '''
 def menu(request):
     items = []
@@ -125,7 +128,8 @@ def menu(request):
 
     return render(request, 'menu.html', context)
 '''
-Works 
+Works
+Takes users order 
 '''
 def order(request):
 
@@ -147,6 +151,7 @@ def order(request):
 
 '''
 Works
+Checks out the user
 '''
 def checkout(request):
     if not request.user.is_authenticated:
