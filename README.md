@@ -18,10 +18,6 @@ Connect on `127.0.0.1:8000/` in the browser.
 
 Send admin an email regarding the order
 
-Fix order page to display price per item
-
-Fix checkout page to display total cost
-
 Create contact page with email updates.
 
 
