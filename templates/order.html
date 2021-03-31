@@ -87,9 +87,10 @@ align-items: center;
 						<div class="card border border-3 text-center" style="width: 18rem; border-color: #a6cee6;
 						background-color: #e4e4a1;">
 							<img id="cardImg" src="{{i.image.url}}"
-								class="card-img-top border border-3 rounded-circle m-1" alt="{{ i.itemName }}" />
+								class="card-img-top border border-3 rounded-circle m-1" alt="{{i.itemName}}" />
 							<div class="card-body">
 								<h5 class="card-title">{{i.itemName}}</h5>
+								<p id="P{{i.itemName}}">{{i.price}}</p>
 								<div id="quantityCont" class="container m-1" style="
 										display: inline-flex;
 										justify-content: center;
@@ -147,7 +148,7 @@ align-items: center;
 		for (let i in cart) {
 			let nameQuan = "Q" + i;
 			let quantity = document.getElementById(nameQuan);
-			quantity.innerText = cart[i];
+			quantity.innerText = cart[i][0];
 		}
 	}
 
@@ -166,9 +167,13 @@ align-items: center;
 
 		let quantity = document.getElementById("Q" + idStr);
 
-		if (cart[idStr] != undefined && cart[idStr] > 0) {
-			cart[idStr] -= 1;
-			quantity.innerText = cart[idStr];
+		let price = (document.getElementById("P" + idStr)).innerText;
+
+		if (cart[idStr][0] != undefined && cart[idStr][0] > 0) {
+			cart[idStr][0] -= 1;
+
+			// Changes the inner text of the html
+			quantity.innerText = cart[idStr][0];
 		}
 	}
 
@@ -178,12 +183,19 @@ align-items: center;
 
 		let quantity = document.getElementById("Q" + idStr);
 
+		let price = (document.getElementById("P" + idStr)).innerText;
+
 		if (cart[idStr] != undefined) {
-			cart[idStr] += 1;
-			quantity.innerText = cart[idStr];
+			cart[idStr][0] += 1;
+
+			// Changes the inner text of the html
+			quantity.innerText = cart[idStr][0];
 		} else {
-			cart[idStr] = 1;
-			quantity.innerText = cart[idStr];
+			let listInfo = new Array (1, price);
+			cart[idStr] = listInfo;
+
+			// Changes the inner text of the html
+			quantity.innerText = cart[idStr][0];
 		}
 	}
 </script>
