@@ -2,9 +2,118 @@
 
 {% block css %}
 
+body{
+	margin: 0px;
+	padding: 0px;
+}
+
+#slideshow{
+background-color: #c5dfef;
+padding: 20px;
+}
+
+#catTitle{
+display: inline-flex;
+justify-content: center;
+align-items: center;
+
+}
+
+#carousel-indicators{ background-color: #5b5b1a; }
+
+.carousel-indicators{ background-color: #89bede; }
+
+.carousel-item{
+background-color: #89bede; }
+
+#rowOfCards{ display: inline-box;
+justify-content: center;
+align-items: center;
+position: relative;
+left: 50px;
+padding-top: 20px;
+padding-bottom: 50px; }
+
+#cardImg{
+max-width: 300px;
+max-height: 200px;
+width: auto;
+height: auto;
+background-color: #7cb0bf;
+border-color: #efefc8; }
+
+#quantityCont{
+display: inline-flex;
+justify-content: center;
+align-items: center;
+}
+
+.carousel-control-prev, .carousel-control-next
+{
+background-color: #a6cee7;
+width: 10%; }
+
+#submitButton{
+display: inline-flex;
+justify-content: center;
+align-items: center;
+}
+
 {% endblock %}
 
 {% block body %} {% load static %}
 
+<div id="slideshow" class="container-fluid m-0 px-3">
+	<!--Slide show startes here-->
+	{% for food, range, nSlides in allItems %}
+	<div id="catTitle" class="container-fluid my-2">
+		<h1>{{food.0.category}}</h1>
+	</div>
+	<div id="myCarousel{{food.0.category}}" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-indicators">
+			<button id="carousel-indicators" type="button" data-bs-target="#{{food.0.category}}"
+				data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+			<!--Loops to create the indicators-->
+			{% for i in range %}
+			<button id="carousel-indicators" type="button" data-bs-target="#{{food.0.category}}"
+				data-bs-slide-to="{{i}}" aria-label="Slide {{i}}"></button>
+			{% endfor%}
+		</div>
+		<!--Creates one active manually-->
+		<div class="carousel-inner my-5">
+			<div class="carousel-item active">
+				<div id="rowOfCards" class="row">
+					<!--Loops inside of food from the next element 1 since first element already prensented -->
+					{% for i in food %}
+					<div class="col-xs-3 col-sm-3 col-md-3">
+						<div class="card border border-3 text-center" style="width: 18rem; border-color: #a6cee6;
+						background-color: #e4e4a1;">
+							<img id="cardImg" src="{{i.image.url}}"
+								class="card-img-top border border-3 rounded-circle m-1" alt="{{ i.itemName }}" />
+							<div class="card-body">
+								<h5 class="card-title">{{i.itemName}}</h5>
+							</div>
+						</div>
+					</div>
+					<!--If this is the element divisible by 3 and its foorloop counter is greater 0 and this is not the last loop then close the previous carousel item and row, and start a new one -->
+					{% if forloop.counter|divisibleby:3 and forloop.counter > 0 and not forloop.last %}
+				</div>
+			</div>
+			<div class="carousel-item">
+				<div id="rowOfCards" class="row">{% endif %} {% endfor %} </div>
+			</div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#myCarousel{{food.0.category}}" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#myCarousel{{food.0.category}}" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	</div>
+	{% endfor %}
+
+</div>
 
 {% endblock %}
