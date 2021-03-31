@@ -15,9 +15,7 @@ Connect on `127.0.0.1:8000/` in the browser.
 
 # To implement
 
-Create contact page with email updates.
-
-Change Info page
+Change Password page
 
 # To Fix
 
