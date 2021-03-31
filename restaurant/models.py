@@ -22,5 +22,10 @@ class SignUp(models.Model):
 class CartItem(models.Model):
     orderId = models.AutoField(primary_key=True, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    items_list = models.CharField(max_length=5000) #Try with TextField too
+    phoneNum = models.CharField(max_length=10,null=True)
+    address = models.TextField()
+    list = models.CharField(max_length=5000) #Try with TextField too
     order_date = models.DateField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.orderId

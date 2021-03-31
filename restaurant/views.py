@@ -83,15 +83,13 @@ def order(request):
 POST request not being sent
 '''
 def checkout(request):
-    if request.method=="POST":
-        print("I can see the post")
-        itemsJSON = request.POST.get('itemsJson', '')
-        print("Hello")
-        order = CartItem(user = request.user, items_list = itemsJSON, order_date = datetime.now())
-        print("Here")
-        order.save()
-        print("PAssed")
-    return render (request, 'checkout.html')
+    if request.method == "POST":
+        order = request.POST.get("getThis")
+        phone = request.POST.get("phone_num")
+        address = request.POST.get("address")
+        cart = CartItem(user = request.user, phoneNum=phone, address=address, list=order, order_date=datetime.now())
+        cart.save()
+    return render(request, 'checkout.html')
 
 '''
 Works

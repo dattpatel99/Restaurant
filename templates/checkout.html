@@ -8,17 +8,62 @@
 
 <div class="container-fluid my-3">
     <ul class="list-group" id="items">
-    </ul>    
+    </ul>
 </div>
 
 <div class="container-fluid my-3">
-    <form method = "post" action = "/">
-        <div class="mb-3">
-           {% csrf_token %}
-        <input type="hidden" name="itemsJson" id="itemsJson" name="itemsJson">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="container my-3">
+            <div class="row align-items-center">
+                <div class="col-9">
+                    <input
+                        type="hidden"
+                        class="form-control"
+                        id="itemsJSON"
+                        name="itemsJSON"
+                    />
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+        <div class="container my-3">
+            <div class="row align-items-center">
+                <div class="col">
+                    <label for="phone" class="col col-form-label fs-4">Phone</label>
+                </div>
+                <div class="col-9">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="phone"
+                        name="phone_num"
+                        placeholder="Enter Phone Number"
+                    />
+                </div>
+            </div>
+        </div>
+        <div class="container my-3">
+            <div class="row align-items-center">
+                <div class="col">
+                    <label for="address" class="col col-form-label fs-4">Address</label>
+                </div>
+                <div class="col-9">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="address"
+                        name="address"
+                        placeholder="Enter Address"
+                    />
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <button type="submit" class="btn btn-primary btn-lg my-3">
+                Order
+            </button>
+        </div>
+    </form>
 </div>
 
 {% endblock %}
@@ -26,6 +71,7 @@
 
 {% block js %}
 <script>
+
     // If there is no cart then make one otherwise load it.
     if (localStorage.getItem("cart") == null) {
         var cart = {};
@@ -33,12 +79,13 @@
         cart = JSON.parse(localStorage.getItem("cart"));
     }
 
-    var itemsJson = document.getElementById("itemsJson");
-    itemsJson.value = JSON.stringify(cart);
+    var tempVar = document.getElementById("itemsJSON");
+    tempVar = JSON.stringify(cart);
+    console.log(tempVar)
 
-    function createLi(name, qty){
+    function createLi(name, qty) {
         var li = document.createElement("li");
-        li.classList.add ("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+        li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
         var span = document.createElement("span");
         span.classList.add("badge", "bg-primary", "rounded-pill");
         var nameNode = document.createTextNode(name);
@@ -49,16 +96,17 @@
         return li;
     }
 
-    function emptyLocal(){
+    function emptyLocal() {
         console.log("Empty")
     }
 
     for (item in cart) {
         let name = item;
         let qty = cart[item];
-
-        var itemList = document.getElementById("items");
-        itemList.appendChild(createLi(name, qty));
+        if (qty != 0) {
+            var itemList = document.getElementById("items");
+            itemList.appendChild(createLi(name, qty));
+        }
     }
 
 </script>
