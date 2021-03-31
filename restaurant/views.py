@@ -38,8 +38,6 @@ def getItemsList(allItems):
         # Creates a list inside of the list allItems. The inner list holds: A query set of food type Item, followed by a range and then number of slide 
         allItems.append([food, range(1, nSlides), nSlides])
 
-
-
 # Create your views here.
 def home(request):
    
@@ -80,14 +78,17 @@ def order(request):
     return render(request, 'order.html', context)
 
 '''
-POST request not being sent
+Works
 '''
 def checkout(request):
+    if not request.user.is_authenticated:
+        messages.info(request, "Please login or signup before trying to order.")
+        return render(request, "login.html")
     if request.method == "POST":
-        order = request.POST.get("getThis")
-        phone = request.POST.get("phone_num")
-        address = request.POST.get("address")
-        cart = CartItem(user = request.user, phoneNum=phone, address=address, list=order, order_date=datetime.now())
+        order = request.POST.get("itemsJSON")
+        phone = "123435"
+        address = "somewhere"
+        cart = CartItem(user=request.user, phoneNum=phone, address=address, list=order, order_date=datetime.now())
         cart.save()
     return render(request, 'checkout.html')
 

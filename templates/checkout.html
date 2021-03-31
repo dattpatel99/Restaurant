@@ -22,6 +22,7 @@
                         class="form-control"
                         id="itemsJSON"
                         name="itemsJSON"
+                        value = "This is empty"
                     />
                 </div>
             </div>
@@ -59,7 +60,7 @@
             </div>
         </div>
         <div class="container">
-            <button type="submit" class="btn btn-primary btn-lg my-3">
+            <button type="submit" class="btn btn-primary btn-lg my-3" onclick="emptyLocal()">
                 Order
             </button>
         </div>
@@ -80,8 +81,8 @@
     }
 
     var tempVar = document.getElementById("itemsJSON");
-    tempVar = JSON.stringify(cart);
-    console.log(tempVar)
+    let cartAsStr = JSON.stringify(cart);
+    tempVar.value = cartAsStr;
 
     function createLi(name, qty) {
         var li = document.createElement("li");
@@ -97,7 +98,7 @@
     }
 
     function emptyLocal() {
-        console.log("Empty")
+        localStorage.clear();
     }
 
     for (item in cart) {
