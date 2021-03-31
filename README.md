@@ -17,6 +17,8 @@ Connect on `127.0.0.1:8000/` in the browser.
 
 Change Password page
 
-# To Fix
+# Things that coudld be added
 
-Null for now.
+Separate admin pages
+
+User order history
