@@ -39,7 +39,41 @@ def getItemsList(allItems):
         # Creates a list inside of the list allItems. The inner list holds: A query set of food type Item, followed by a range and then number of slide 
         allItems.append([food, range(1, nSlides), nSlides])
 
-def makeOrderCleaner(theOrder):
+# For making the order string easily readable
+def changeOrder(theOrder):
+    # Will hold the final string
+    finalString = ""
+
+    #Making the order easier to form into one string by removing some character
+    theOrder = theOrder.replace("{", "")
+    theOrder = theOrder.replace("}", "")
+    theOrder = theOrder.replace('"', "")
+    theOrder = theOrder.replace('"', "")
+
+    # Splits the order to be 1 item as an element
+    listOne = theOrder.split(",")
+    for i in range(0, len(listOne)-1, 2):
+        tempStr = listOne[i] + "|" + listOne[i+1]
+
+        # Splits the single order into itemName and a string holding quantity and price
+        lisSecond = tempStr.split(":")
+        itemName = lisSecond[0]
+
+        # Splits the string with quantity and price into a list of each as an element
+        listThird = lisSecond[1].split("|")
+        for j in range(0, len(listThird)):
+
+            # Removes some useless characters from the quantity string and price
+            listThird[j] =  listThird[j].replace("[","")
+            listThird[j] = listThird[j].replace("]","")
+
+            # Stores each 
+            pricePerItem = listThird[1]
+            quan = listThird[0]
+
+        # Forms a final string
+        finalString = finalString + itemName + " Quantity: " + quan + " Price per item: " + pricePerItem + " = " + str(int(quan) * float(pricePerItem)) + "\n"
+    return finalString
 
 # Create your views here.
 '''
@@ -52,7 +86,7 @@ def home(request):
 def contact(request):
     return render(request, 'contact.html')
 '''
-Works but add the prices
+Works 
 '''
 def menu(request):
     items = []
@@ -63,7 +97,7 @@ def menu(request):
 
     return render(request, 'menu.html', context)
 '''
-Works but add the prices
+Works 
 '''
 def order(request):
 
@@ -92,6 +126,7 @@ def checkout(request):
         return render(request, "login.html")
     if request.method == "POST":
         order = request.POST.get("itemsJSON")
+        order = changeOrder(order)
         orderCost = request.POST.get("orderCost")
         phone = request.POST.get("phone_num")
         address = request.POST.get("address")
@@ -104,7 +139,7 @@ def checkout(request):
 
         # Email variables to use
         subject = "New Order ID: " + cart.string_id
-        emailMsg = "User = " + request.user.username + "\n" + order + "\n" + "Total cost: " + orderCost
+        emailMsg = "User = " + request.user.username + "\n\n" + order + "\n\n" + "Total cost: " + orderCost
         emailRecevier = "flask.tutorial21@gmail.com"
 
 
