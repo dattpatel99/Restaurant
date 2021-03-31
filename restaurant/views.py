@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.mail import send_mail as Mail
 from math import ceil
 from django.shortcuts import HttpResponse as http
 from django.contrib.auth.models import User 
@@ -37,6 +38,8 @@ def getItemsList(allItems):
         # adds its to all items
         # Creates a list inside of the list allItems. The inner list holds: A query set of food type Item, followed by a range and then number of slide 
         allItems.append([food, range(1, nSlides), nSlides])
+
+def makeOrderCleaner(theOrder):
 
 # Create your views here.
 '''
@@ -94,10 +97,33 @@ def checkout(request):
         address = request.POST.get("address")
         cart = CartItem(user=request.user, phoneNum=phone, address=address, cost=int(orderCost), list=order, order_date=datetime.now())
         cart.save()
+
+        # So that we can send the order ID somehow
+        newId = cart.orderId
+        cart.string_id = str(newId)
+
+        # Email variables to use
+        subject = "New Order ID: " + cart.string_id
+        emailMsg = "User = " + request.user.username + "\n" + order + "\n" + "Total cost: " + orderCost
+        emailRecevier = "flask.tutorial21@gmail.com"
+
+
+        #Send email to admin whoever they are
+        Mail(
+            subject,
+            emailMsg,
+            request.user.username,
+            [emailRecevier],
+            fail_silently=False
+        )
+       
+        # Create thank you message to alert user
         msg = "Thank you for ordering! You order Id is:"
         id = cart.orderId
         context = {'id': id}
         messages.success(request, msg)
+        
+        # Redirect to home page
         return render(request, 'home.html', context)
     return render(request, 'checkout.html')
 

@@ -16,6 +16,7 @@ class Item(models.Model):
 
 class CartItem(models.Model):
     orderId = models.AutoField(primary_key=True, unique=True)
+    string_id = models.CharField(max_length=100, default='-1')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     phoneNum = models.CharField(max_length=10,null=True)
     address = models.TextField()
