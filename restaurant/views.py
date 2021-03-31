@@ -7,28 +7,9 @@ from django.contrib import messages
 from datetime import datetime
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
 
-# Create your views here.
-def home(request):
-   
-    return render(request, 'home.html')
+# Functions to use in multiple places
+def getItemsList(allItems):
 
-def contact(request):
-    return render(request, 'contact.html')
-
-def menu(request):
-    return render(request, 'menu.html')
-
-def order(request):
-
-    # in the event the usre is smart and enter /order/ in the url section
-    if not request.user.is_authenticated:
-        messages.info(request, "Please login or signup before trying to order.")
-        return render(request, "login.html")
-
-    # Learned from: CodeWithHarry
-    # Credit: https://www.youtube.com/watch?v=6iDW97emfB0&list=PL1PPKISJVChyleKhFnRBWeYvBGElatze-&index=15&t=31s
-    
-    allItems = []
     # Creates a list of dictionaries with catergory and itemName as key and the cats and names as value
     categoriesOfProducts = Item.objects.values('category', 'itemName')
     
@@ -56,13 +37,61 @@ def order(request):
         # adds its to all items
         # Creates a list inside of the list allItems. The inner list holds: A query set of food type Item, followed by a range and then number of slide 
         allItems.append([food, range(1, nSlides), nSlides])
+
+
+
+# Create your views here.
+def home(request):
+   
+    return render(request, 'home.html')
+
+def contact(request):
+    return render(request, 'contact.html')
+'''
+Works but add the prices
+'''
+def menu(request):
+    items = []
+
+    getItemsList(items)
+
+    context = {'allItems': items}
+
+    return render(request, 'menu.html', context)
+'''
+Works but add the prices
+'''
+def order(request):
+
+    # in the event the usre is smart and enter /order/ in the url section
+    if not request.user.is_authenticated:
+        messages.info(request, "Please login or signup before trying to order.")
+        return render(request, "login.html")
+
+    # Learned from: CodeWithHarry
+    # Credit: https://www.youtube.com/watch?v=6iDW97emfB0&list=PL1PPKISJVChyleKhFnRBWeYvBGElatze-&index=15&t=31s
     
-    context = {"allItems": allItems}
+    theItems = []
+
+    getItemsList(theItems)
+    
+    context = {"allItems": theItems}
     
     return render(request, 'order.html', context)
 
-def cart(request):
-    cart = CartItem.objects.filter(user = request.user, datetime = datetime.now)
+'''
+POST request not being sent
+'''
+def checkout(request):
+    if request.method=="POST":
+        print("I can see the post")
+        itemsJSON = request.POST.get('itemsJson', '')
+        print("Hello")
+        order = CartItem(user = request.user, items_list = itemsJSON, order_date = datetime.now())
+        print("Here")
+        order.save()
+        print("PAssed")
+    return render (request, 'checkout.html')
 
 '''
 Works
@@ -123,35 +152,3 @@ Logs out user and sends them to login page
 def logout(request):
     dj_logout(request)
     return render(request, "login.html")
-
-
-'''
-allItems = []
-    # Creates a list of dictionaries with catergory and itemName as key and the cats and names as value
-    categoriesOfProducts = Item.objects.values('category', 'itemName')
-    
-    # Creates a set 
-    # From the previous list takes only categories and creates a set of only categories
-    categories = {i['category'] for i in categoriesOfProducts}
-
-    # loops through the categories set and selects each category
-    for cat in categories:
-        # Filters the food item based on the category
-        food = Item.objects.filter(category = cat)
-
-        # Gets the number of food items in that category
-        numItems = len(food)
-
-        # creates nSlides for that food item
-        if (numItems > 3):
-            if (numItems // 3 == 0):
-                nSlides = numItems / 3
-            else:
-                nSlides = ceil(numItems / 3)
-        else:
-            nSlides = 1
-
-        # adds its to all items
-        # Creates a list inside of the list allItems. The inner list holds: A query set of food type Item, followed by a range and then number of slide 
-        allItems.append([food, range(1, nSlides), nSlides])
-'''

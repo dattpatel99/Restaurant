@@ -20,11 +20,7 @@ class SignUp(models.Model):
     address = models.TextField()
 
 class CartItem(models.Model):
-    ORDER_STATUS = (
-        ('Active', 'Active'),
-        ('Delivered', 'Delivered')
-    )
+    orderId = models.AutoField(primary_key=True, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    items_list = models.TextField()
+    items_list = models.CharField(max_length=5000) #Try with TextField too
     order_date = models.DateField(auto_now_add=True, null=True, blank=True)
-    status = models.CharField(max_length=20, choices=ORDER_STATUS, default='Active')

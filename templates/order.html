@@ -131,7 +131,7 @@ align-items: center;
 
 	<div id="submitButton" class="container-fluid my-1">
 		<button type="submit" class="btn button btn-primary fs-4" onclick="addToCart()">
-			Submit
+			Check Out
 		</button>
 	</div>
 </div>
@@ -155,11 +155,8 @@ align-items: center;
 		// IDK What it does but youtube said to do it....
 		localStorage.setItem("cart", JSON.stringify(cart));
 
-		// Clears the local storage
-
-		// Sends the user to main page
-		// FIXME: REPLACE THIS TO SEND USER TO CART PAGE FOR FINAL SUBMISSION
-		window.location.pathname = "/order";
+		// Send user for checkout
+		window.location.pathname = "/checkout";
 	}
 
 	// Decreases the quantity

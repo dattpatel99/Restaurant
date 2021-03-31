@@ -1,0 +1,65 @@
+{%extends request.user.is_authenticated|yesno:'logout_layout.html,layout.html'%}
+
+{% block css %}
+
+{% endblock %}
+
+{% block body %} {% load static %}
+
+<div class="container-fluid my-3">
+    <ul class="list-group" id="items">
+    </ul>    
+</div>
+
+<div class="container-fluid my-3">
+    <form method = "post" action = "/">
+        <div class="mb-3">
+           {% csrf_token %}
+        <input type="hidden" name="itemsJson" id="itemsJson" name="itemsJson">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+<script>
+    // If there is no cart then make one otherwise load it.
+    if (localStorage.getItem("cart") == null) {
+        var cart = {};
+    } else {
+        cart = JSON.parse(localStorage.getItem("cart"));
+    }
+
+    var itemsJson = document.getElementById("itemsJson");
+    itemsJson.value = JSON.stringify(cart);
+
+    function createLi(name, qty){
+        var li = document.createElement("li");
+        li.classList.add ("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+        var span = document.createElement("span");
+        span.classList.add("badge", "bg-primary", "rounded-pill");
+        var nameNode = document.createTextNode(name);
+        var qtyNode = document.createTextNode(qty);
+        span.appendChild(qtyNode);
+        li.appendChild(nameNode);
+        li.appendChild(span);
+        return li;
+    }
+
+    function emptyLocal(){
+        console.log("Empty")
+    }
+
+    for (item in cart) {
+        let name = item;
+        let qty = cart[item];
+
+        var itemList = document.getElementById("items");
+        itemList.appendChild(createLi(name, qty));
+    }
+
+</script>
+{% endblock %}
