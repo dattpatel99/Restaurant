@@ -20,6 +20,8 @@ Send admin an email regarding the order
 
 Create contact page with email updates.
 
+Change Info page
+
 
 # To Fix
 
