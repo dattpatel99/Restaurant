@@ -15,10 +15,10 @@ Connect on `127.0.0.1:8000/` in the browser.
 
 # To implement
 
-Create contact page with email updates.
+Change Password page
 
-Change Info page
+# Things that coudld be added
 
-# To Fix
+Separate admin pages
 
-Null for now.
+User order history
