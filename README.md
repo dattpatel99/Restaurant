@@ -1,8 +1,7 @@
 # Restaurant
 
 # About 
-Restaurant webpage wiht login, singup, logout, order features that work. Information collected in signup is displayed to admin only. Contact page is to be implemented. CHange info page is to be implemented. 
-
+Restaurant webpage wiht login, singup, logout, order and email features that work. When a new order is sent email is sent to the email specified in `settings.py`, change those settings to change the email that recevies mail. Information collected in signup is displayed to admin only. Contact page is to be implemented. Change info page is to be implemented. 
 
 # To get started:
 
@@ -16,12 +15,9 @@ Connect on `127.0.0.1:8000/` in the browser.
 
 # To implement
 
-Send admin an email regarding the order
-
 Create contact page with email updates.
 
 Change Info page
-
 
 # To Fix
 
