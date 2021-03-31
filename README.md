@@ -16,13 +16,15 @@ Connect on `127.0.0.1:8000/` in the browser.
 
 # To implement
 
-Create cart page with submit button which will send admin an email regarding the order
+Send admin an email regarding the order
 
-Create cart so that orders can be stored
+Fix order page to display price per item
+
+Fix checkout page to display total cost
 
 Create contact page with email updates.
 
 
 # To Fix
 
- For some reason order page carousel does not work at times.
+Null for now.
