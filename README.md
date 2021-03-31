@@ -1,7 +1,7 @@
 # Restaurant
 
 # About 
-This is a restaurant page. The login, singup and logout features work. Order webpage can storage data to localStorage but still needs further implementation. Information collected in signup is displayed to admin only. 
+Restaurant webpage wiht login, singup, logout, order features that work. Information collected in signup is displayed to admin only. Contact page is to be implemented. CHange info page is to be implemented. 
 
 
 # To get started:
