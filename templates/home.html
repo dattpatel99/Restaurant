@@ -1,6 +1,18 @@
 {% extends request.user.is_authenticated|yesno:'logout_layout.html,layout.html'%}
  {% block body %} {% load static %}
 
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} alert-dismissible fade show my-0" role=" alert">
+	<strong> {{message}} {{id}}</strong>
+	<button
+		type="button"
+		class="btn-close"
+		data-bs-dismiss="alert"
+		aria-label="Close"
+	></button>
+</div>
+{% endfor %} 
+
 <div class="container-fluid p-0 my-1">
 	<div
 		id="carouselExampleControls"

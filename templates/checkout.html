@@ -2,6 +2,12 @@
 
 {% block css %}
 
+div.centerThis{
+display: inline-flex;
+justify-content: center;
+align-items: center;
+}
+
 {% endblock %}
 
 {% block body %} {% load static %}
@@ -11,19 +17,24 @@
     </ul>
 </div>
 
-<div class="container-fluid my-3">
-    <form action="" method="post">
+<div class=" centerThis container-fluid my-2">
+    <h3 id="total" class="p-2 mx-2"></h3>
+</div>
+
+<div class="container my-3 border boredr-2 border-dark">
+    <form action="/checkout/" method="post">
         {% csrf_token %}
         <div class="container my-3">
             <div class="row align-items-center">
                 <div class="col-9">
-                    <input
-                        type="hidden"
-                        class="form-control"
-                        id="itemsJSON"
-                        name="itemsJSON"
-                        value = "This is empty"
-                    />
+                    <input type="hidden" class="form-control" id="itemsJSON" name="itemsJSON" value="This is empty" />
+                </div>
+            </div>
+        </div>
+        <div class="container my-3">
+            <div class="row align-items-center">
+                <div class="col-9">
+                    <input type="hidden" class="form-control" id="orderCost" name="orderCost" value="-1" />
                 </div>
             </div>
         </div>
@@ -33,13 +44,8 @@
                     <label for="phone" class="col col-form-label fs-4">Phone</label>
                 </div>
                 <div class="col-9">
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="phone"
-                        name="phone_num"
-                        placeholder="Enter Phone Number"
-                    />
+                    <input type="text" class="form-control" id="phone" name="phone_num"
+                        placeholder="Enter Phone Number" />
                 </div>
             </div>
         </div>
@@ -49,13 +55,7 @@
                     <label for="address" class="col col-form-label fs-4">Address</label>
                 </div>
                 <div class="col-9">
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="address"
-                        name="address"
-                        placeholder="Enter Address"
-                    />
+                    <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address" />
                 </div>
             </div>
         </div>
@@ -73,6 +73,40 @@
 {% block js %}
 <script>
 
+    // Creates the elements in the cart display
+    function createLi(name, qty, price) {
+
+        //The list element for an item
+        var li = document.createElement("li");
+        // Adding the classes in it
+        li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+
+        // The span element for an item and adding classes in it        
+        var span = document.createElement("span");
+        span.classList.add("badge", "bg-primary", "rounded-pill");
+
+        var divSub = document.createElement("div");
+        divSub.classList.add("fw-bold");
+
+        var divHold = document.createElement("div");
+        divHold.classList.add("ms-2", "me-auto");
+
+        let nameNode = document.createTextNode(name);
+        let qtyNode = document.createTextNode(qty + " * " + price);
+        let priceTotalNode = document.createTextNode((price * qty));
+
+        divSub.appendChild(nameNode);
+        divHold.appendChild(divSub);
+        divHold.appendChild(qtyNode);
+
+        span.appendChild(priceTotalNode);
+
+        li.appendChild(divHold);
+        li.appendChild(span);
+
+        return li;
+    }
+
     // If there is no cart then make one otherwise load it.
     if (localStorage.getItem("cart") == null) {
         var cart = {};
@@ -80,35 +114,37 @@
         cart = JSON.parse(localStorage.getItem("cart"));
     }
 
+    // Sends the cart to DB
     var tempVar = document.getElementById("itemsJSON");
     let cartAsStr = JSON.stringify(cart);
     tempVar.value = cartAsStr;
 
-    function createLi(name, qty) {
-        var li = document.createElement("li");
-        li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
-        var span = document.createElement("span");
-        span.classList.add("badge", "bg-primary", "rounded-pill");
-        var nameNode = document.createTextNode(name);
-        var qtyNode = document.createTextNode(qty);
-        span.appendChild(qtyNode);
-        li.appendChild(nameNode);
-        li.appendChild(span);
-        return li;
+    // Holds total price
+    var totalPrice = 0;
+
+    // Creates the display for what items are in cart
+    for (item in cart) {
+        let name = item;
+        let qty = cart[item][0];
+        let price = cart[item][1];
+        totalPrice += (qty*price);
+        if (qty != 0) {
+            var itemList = document.getElementById("items");
+            itemList.appendChild(createLi(name, qty, price));
+        }
     }
+
+    // Sends the total cost
+    var theCost = document.getElementById("orderCost");
+    theCost.value = totalPrice;
+
+    var sumTag = document.getElementById("total");
+    sumTag.innerText = "Total cost = " + totalPrice;
 
     function emptyLocal() {
         localStorage.clear();
     }
 
-    for (item in cart) {
-        let name = item;
-        let qty = cart[item];
-        if (qty != 0) {
-            var itemList = document.getElementById("items");
-            itemList.appendChild(createLi(name, qty));
-        }
-    }
 
 </script>
 {% endblock %}

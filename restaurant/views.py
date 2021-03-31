@@ -2,7 +2,7 @@ from django.shortcuts import render
 from math import ceil
 from django.shortcuts import HttpResponse as http
 from django.contrib.auth.models import User 
-from restaurant.models import SignUp, CartItem, Item
+from restaurant.models import CartItem, Item
 from django.contrib import messages
 from datetime import datetime
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login as dj_login, logout as dj_lo
 def getItemsList(allItems):
 
     # Creates a list of dictionaries with catergory and itemName as key and the cats and names as value
-    categoriesOfProducts = Item.objects.values('category', 'itemName')
+    categoriesOfProducts = Item.objects.values('category', 'itemName', 'price')
     
     # Creates a set 
     # From the previous list takes only categories and creates a set of only categories
@@ -39,6 +39,9 @@ def getItemsList(allItems):
         allItems.append([food, range(1, nSlides), nSlides])
 
 # Create your views here.
+'''
+Works
+'''
 def home(request):
    
     return render(request, 'home.html')
@@ -86,10 +89,16 @@ def checkout(request):
         return render(request, "login.html")
     if request.method == "POST":
         order = request.POST.get("itemsJSON")
-        phone = "123435"
-        address = "somewhere"
-        cart = CartItem(user=request.user, phoneNum=phone, address=address, list=order, order_date=datetime.now())
+        orderCost = request.POST.get("orderCost")
+        phone = request.POST.get("phone_num")
+        address = request.POST.get("address")
+        cart = CartItem(user=request.user, phoneNum=phone, address=address, cost=int(orderCost), list=order, order_date=datetime.now())
         cart.save()
+        msg = "Thank you for ordering! You order Id is:"
+        id = cart.orderId
+        context = {'id': id}
+        messages.success(request, msg)
+        return render(request, 'home.html', context)
     return render(request, 'checkout.html')
 
 '''
@@ -133,14 +142,11 @@ def signup(request):
         firstName=request.POST.get('firstName')
         lastName=request.POST.get('lastName')
         emailID=request.POST.get('email')
-        number=request.POST.get('phone_num')
-        address = request.POST.get('address')
         password=request.POST.get('password')
         
         # Creates new objects of newUser and singup 
         newUser = User.objects.create_user(username=emailID, password=password, first_name=firstName, last_name = lastName, date_joined = datetime.now())
         newUser.save()
-        signup = SignUp.objects.create(user=newUser, phoneNum =number, address=address) 
 
     return render(request, 'newUser.html')
 
