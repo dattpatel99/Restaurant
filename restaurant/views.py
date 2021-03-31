@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core.mail import send_mail as Mail
 from math import ceil
 from django.shortcuts import HttpResponse as http
+from django.shortcuts import redirect
 from django.contrib.auth.models import User 
 from restaurant.models import CartItem, Item
 from django.contrib import messages
@@ -136,7 +137,7 @@ def order(request):
     # in the event the usre is smart and enter /order/ in the url section
     if not request.user.is_authenticated:
         messages.info(request, "Please login or signup before trying to order.")
-        return render(request, "login.html")
+        return redirect("login.html")
 
     # Learned from: CodeWithHarry
     # Credit: https://www.youtube.com/watch?v=6iDW97emfB0&list=PL1PPKISJVChyleKhFnRBWeYvBGElatze-&index=15&t=31s
@@ -192,8 +193,40 @@ def checkout(request):
         messages.success(request, msg)
         
         # Redirect to home page
-        return render(request, 'home.html', context)
+        return render('home.html', context)
     return render(request, 'checkout.html')
+
+def changeInfo(request):
+    change = "notYet"
+    mesg = "null"
+    if not request.user.is_authenticated:
+        messages.info(request, "Please login or signup before trying to order.")
+        return redirect("login")
+
+    if request.method == "POST":
+        currPass = request.POST.get("curPass")
+        newPass = request.POST.get("newPass")
+        confirmPass = request.POST.get("confirmNewPass")
+
+        user = User.objects.get(username__exact = request.user.username)
+
+        if user.check_password(currPass):
+            if (newPass == confirmPass):
+                user.set_password(confirmPass)
+                user.save()
+                logout(request)
+                return redirect("login")
+            else:
+                change = "no"
+                mesg = "Confirmed password was not same as new password"
+        else:
+            change = "no"
+            mesg = "Old Password incorrect"
+    context ={
+        "change":change,
+        'mesg':mesg
+    }
+    return render(request, "changeInfo.html", context)
 
 '''
 Works
@@ -213,7 +246,7 @@ def login(request):
         if user is not None:
             dj_login(request, user)
             error = "no"
-            return render(request, "home.html")
+            return redirect("home")
         # Using elif because when redirecting from /order then message is show cased twice
         # otherwise changes the error var to yes
     
@@ -246,8 +279,8 @@ def signup(request):
 
 '''
 Works
-Logs out user and sends them to login page
+Logs out user and sends them to empty page that says logged out
 '''
 def logout(request):
     dj_logout(request)
-    return render(request, "login.html")
+    return redirect("login")

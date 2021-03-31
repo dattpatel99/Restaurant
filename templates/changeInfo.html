@@ -1,0 +1,87 @@
+{%extends request.user.is_authenticated|yesno:'logout_layout.html,layout.html'%}
+{% block css %} div.container-fluid{ display: inline-flex; justify-content:
+center; align-items: center; } {% endblock %} {% block body %} {% load static %}
+
+{% if change == "no" %}
+<div class="alert alert-warning alert-dismissible fade show my-0" role=" alert">
+	<strong>{{mesg}}</strong>
+	<button
+		type="button"
+		class="btn-close"
+		data-bs-dismiss="alert"
+		aria-label="Close"
+	></button>
+</div>
+{% endif %}
+
+<div class="container-fluid mt-4">
+	<h2>Change Password</h2>
+</div>
+<div class="container my-4">
+	<div class="row">
+		<div class="col-lg-8 col-md-10 mx-auto border border-2 border-dark p-4">
+			<form
+				name="sentMessage"
+				id="contactForm"
+				action="/changeInfo/"
+				method="post"
+				novalidate
+			>
+				{% csrf_token %}
+				<div class="control-group">
+					<div class="form-group floating-label-form-group controls">
+						<label>Current Password</label>
+						<input
+							type="text"
+							class="form-control"
+							placeholder="Current Password"
+							id="curPass"
+							name="curPass"
+							required
+							data-validation-required-message="Please enter your current password."
+						/>
+						<p class="help-block text-danger"></p>
+					</div>
+				</div>
+                <div class="control-group">
+					<div class="form-group floating-label-form-group controls">
+						<label>New Password</label>
+						<input
+							type="text"
+							class="form-control"
+							placeholder="New Password"
+							id="newPass"
+							name="newPass"
+							required
+							data-validation-required-message="Please enter your new password"
+						/>
+						<p class="help-block text-danger"></p>
+					</div>
+				</div>
+                <div class="control-group">
+					<div class="form-group floating-label-form-group controls">
+						<label>Confirm New Password</label>
+						<input
+							type="text"
+							class="form-control"
+							placeholder="Confirm New Password"
+							id="confirmNewPass"
+							name="confirmNewPass"
+							required
+							data-validation-required-message="Confirm your new password"
+						/>
+						<p class="help-block text-danger"></p>
+					</div>
+				</div>
+				<br />
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary" id="sendMessageButton">
+						Change
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
