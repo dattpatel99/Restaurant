@@ -12,3 +12,5 @@ Run `pip install -r requirements.txt` from the directory.
 Run `python manage.py runserver`
 
 Connect on `127.0.0.1:8000/` in the browser.
+
+(Optional but recommended) Use firefox as the browser
